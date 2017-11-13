@@ -104,6 +104,7 @@ public class gra {
     		return output;
     	}
     }
+    
     static String generateNewText(gra a, String inputText)
     {
     	String[] inputtext =inputText.toLowerCase().split("[^a-z]{1,}");
@@ -164,8 +165,7 @@ public class gra {
     				 }
     			}
     		}
-    	
-    }
+       }
     	result.append("输出" + word1 + "到" + word2 + "的最短路径：");
     	result.append(word1);
     	for(int i=0;i<n;i++){
@@ -225,6 +225,45 @@ public class gra {
     	int num=a.pointnum;
     	Random m=new Random();
     	int n=m.nextInt(a.pointnum);
+    	int[] outpoint=new int[a.pointnum];
+    	StringBuffer  randompath=new StringBuffer("");
+    	boolean[][] matrix=new boolean[a.pointnum][a.pointnum];
+    	while(n<num)
+    	{
+    		randompath.append(a.point[n]+" ");
+    		int pointoutnum=0;
+    		for(i=0;i<a.pointnum;i++)
+    		{
+    			if(a.side[n][i]!=0)
+    			{
+    				outpoint[pointoutnum]=i;
+    				pointoutnum++;
+    			}
+    		}
+    		if(pointoutnum==0)
+    		{
+    			return randompath.toString();
+    		}
+    		Random x=new Random();
+        	int y=x.nextInt(pointoutnum);
+        	if(matrix[n][outpoint[y]]==true)
+        	{
+        		randompath.append(a.point[outpoint[y]]+" ");
+        		return randompath.toString();
+        	}
+        	else
+            {
+        		matrix[n][outpoint[y]]=true;
+        	    n=outpoint[y];
+            }
+    	}
+    	return randompath.toString();
+    }
+    
+    static String randomWalk2(gra a,int n) throws IOException
+    {
+    	int i;
+    	int num=a.pointnum;
     	int[] outpoint=new int[a.pointnum];
     	StringBuffer  randompath=new StringBuffer("");
     	boolean[][] matrix=new boolean[a.pointnum][a.pointnum];
